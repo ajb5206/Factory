@@ -26,6 +26,11 @@ namespace Factory.Controllers
 			return View();
 		}
 
-		
+		public ActionResult Create(Engineer engineer)
+		{
+			_db.Engineers.Add(engineer);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
+		}
 	}
 }
