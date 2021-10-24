@@ -26,6 +26,7 @@ namespace Factory.Controllers
 			return View();
 		}
 
+		[HttpPost]
 		public ActionResult Create(Engineer engineer)
 		{
 			_db.Engineers.Add(engineer);
@@ -40,6 +41,20 @@ namespace Factory.Controllers
 				.ThenInclude(join => join.Machine)
 				.FirstOrDefault(engineer => engineer.EngineerId == id);
 			return View(thisEngineer);
+		}
+
+		public ActionResult Edit(int id)
+		{
+			var thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+			return View(thisEngineer);
+		}
+
+		[HttpPost]
+		public ActionResult Edit(Engineer engineer)
+		{
+			_db.Entry(engineer).State = EntityState.Modified;
+			_db.SaveChanges();
+			return RedirectToAction("Index");
 		}
 	}
 }
